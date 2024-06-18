@@ -4,7 +4,7 @@
 #include "Level.h"
 #include "Player.h"
 
-
+//Constructors
 Enemy::Enemy() {
 
 }
@@ -20,10 +20,9 @@ Enemy::Enemy(Level* level, Texture texture, int health, int damage, int speed)
 
 }
 
+//Copy constructor
 Enemy::Enemy(const Enemy& other) {
     // Copy the members of the other object
-    //positionX = other.positionX;
-    //positionY = other.positionY;
     level = other.level;
     texture = other.texture;
     sprite = Sprite(texture);
@@ -33,54 +32,17 @@ Enemy::Enemy(const Enemy& other) {
 	positionX = other.positionX;
 	positionY = other.positionY;
     direction = other.direction;
-
-    // Assign the texture to the sprite
-    //... copy other members...
 }
 
+//Destructor
 Enemy::~Enemy() {}
 
-void Enemy::update(float deltaTime) {
+//Update enemy
+void Enemy::update(float deltaTime) {}
 
-    // Update enemy attack
-   /* startAttack(deltaTime);*/
-
-   /* attackTimer += deltaTime;*/
-}
-
-    //void Enemy::move(float deltaTime) {
-    //    // Implement enemy movement logic here
-    //    // Update enemy position based on its movement pattern
-    //    // You can use a timer and frame index to control the enemy's movement animation
-
-    //    // Example: Simple enemy movement pattern (move left and right)
-    //    static float movementTimer = 0.0f;
-    //    const float movementSpeed = 50.0f; // Adjust this value to control the enemy's movement speed
-
-    //    movementTimer += deltaTime;
-
-    //    if (movementTimer >= 1.0f) {
-    //        movementTimer = 0.0f; 
-    //        direction = (direction == 'l') ? 'r' : 'l'; 
-    //    }
-
-    //    if (direction == 'l') {
-    //        positionX -= movementSpeed * deltaTime; 
-    //    }
-    //    else {
-    //        positionX += movementSpeed * deltaTime;
-    //    }
-
-    //    sprite.setPosition(positionX, positionY);
-    //
-//}
-
+//if player near the enemy it attacks
     void Enemy::startAttack(float deltaTime) {
-        // Implement enemy attack logic here
-        // Check if the enemy is within attack range and attack the player
-        // You can use a timer and frame index to control the enemy's attack animation
 
-        // Example: Simple enemy attack pattern (attack when within a certain distance)
         static float attackTimer = 0.0f;
         const float attackRange = 100.0f; // Adjust this value to control the enemy's attack range
         const float attackDelay = 10.0f; // Increase the attack delay to make the pause longer
@@ -98,40 +60,37 @@ void Enemy::update(float deltaTime) {
         }
     }
 
-//bool Enemy::canAttack() {
-//    if (attackTimer >= attackDelay) {
-//        attackTimer = 0.0f; // Reset the timer
-//        return true; // Enemy can attack
-//    }
-//    return false; // Enemy cannot attack yet
-//}
+    bool Enemy::reverseDirection() {
+        if (direction == 'l') {
+            direction = 'r';
+        }
+        else {
+            direction = 'l';
+        }
+        return true;
+    }
 
-bool Enemy::reverseDirection() {
-    if(direction == 'l') {
-		direction = 'r';
-	} else {
-		direction = 'l';
-	}
-	return true;
-}
-
+//attack of enemy
 void Enemy::attack(Player* player) {
     int damage = 2; // default attack damage
     player->takeDamage(damage);
     cout << "Enemy attacks player for " << damage << " damage!" << endl;
 }
 
+//block of the enemy
 void Enemy:: block() {
     cout << "Enemy blocks!" << endl;
     blockDamage = true; // set block flag
 }
 
+//Special attack of the enemy
 void Enemy::specialAttack(Player* player) {
     // triple attack damage
     player->takeDamage(damage * 3);
     cout << "Enemy uses special attack on player for " << damage << " damage!" << endl;
 }
 
+//takes damage(enemy) from player
 void Enemy::takeDamage(int damage) {
     if (blockDamage) {
         damage /= 3; // reduce damage if blocking

@@ -3,18 +3,22 @@
 class Enemy
 {
 public:
+	//Variables
 	Level* level;
 
 	bool isDead = false;
 
+	//enemy stats
 	int health;
 	int damage;
 	int speed;
 
+	//appearance
 	Texture texture;
 	Sprite sprite;
 
 	char direction;
+	//positions
 	float positionX;
 	float positionY;
 
@@ -23,6 +27,7 @@ public:
 
     bool blockDamage = false;
 
+	//Constructors
 	Enemy();
 
 	Enemy(Level* level, Texture texture, int health, int damage, int speed);
@@ -30,23 +35,16 @@ public:
 
 	Enemy(const Enemy& other);
 
+	//Functions
 	void update(float deltaTime);
-	void move(float deltaTime);
 	void startAttack(float deltaTime);
 
-	bool canAttack();
-
 	bool reverseDirection();
-
     void attack(Player* player);
 
 	void block();
 
 	void specialAttack(Player* player);
-
-    //bool canSeeSpecialAttack() {
-    //    return true; // enemy's special attack preparation is visible
-    //}
 
 
 	void takeDamage(int damage);

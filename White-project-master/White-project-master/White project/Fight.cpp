@@ -4,6 +4,7 @@
 #include "Enemy.h"
 #include "Level.h"
 
+//constructor
 Fight::Fight(Level* level, Player* player, Enemy* enemy, int maxTurns)
 {
     this->window = level->target;
@@ -13,76 +14,73 @@ Fight::Fight(Level* level, Player* player, Enemy* enemy, int maxTurns)
 	this->enemy = enemy;
     this->maxTurns = maxTurns;
 }
-
+//starts the fight
 void Fight::startFight()
 {
+    //player sprite
     playerTexture.loadFromFile("Images/AnimationSheet_Character.png", IntRect(0, 0, 32, 32));
     playerSprite.setTexture(playerTexture);
     playerSprite.setPosition(100, 100);
 
+    //enemy sprite
     enemyTexture = enemy->texture;
     enemySprite.setTexture(enemyTexture);
     enemySprite.setPosition(300, 100);
 
+    //font
     font.loadFromFile("Fonts/Garton.ttf");
 
+    //player health text
     playerHealthText.setFont(font);
     playerHealthText.setCharacterSize(24);
     playerHealthText.setPosition(100, 50);
-
+    //enemy health text
     enemyHealthText.setFont(font);
     enemyHealthText.setCharacterSize(24);
     enemyHealthText.setPosition(300, 50);
-
+    //sets information about health
     playerHealthText.setString("Player Health: " + std::to_string(player->health));
     enemyHealthText.setString("Enemy Health: " + std::to_string(enemy->health));
 
+    //information about action in fight
     actionText.setFont(font);
 	actionText.setCharacterSize(24);
 	actionText.setPosition(50, 300);
     actionText.setFillColor(Color::Red);
     actionText.setString("Choose an action: 1. Attack, 2. Block, 3. Special Attack");
 
+    //win text
     winText.setFont(font);
     winText.setCharacterSize(48);
     winText.setPosition(200, 200);
-
+    //lose text
     loseText.setFont(font);
     loseText.setCharacterSize(48);
     loseText.setPosition(200, 200);
-
+    //status text
     statusText.setFont(font);
     statusText.setCharacterSize(24);
     statusText.setPosition(200, 260);
 
     Clock clock;
 
-    /*int turnCount = 0;
-    while (player->health > 0 && enemy->health > 0 && 0 && turnCount < maxTurns) {
-        sf::Time elapsed = clock.restart();
-        update();
-        level->target->clear();
-        render(level->target);
-        sf::sleep(sf::seconds(1.0f / 60.0f) - elapsed);
-
-        turnCount++;
-    }*/
 }
 
+//player turn in fight
 void Fight::playerTurn() {
     sf::Event event;
 	statusText.setString("Player's turn");
     render(window);
-
+    //if someones health is 0 it dies
     if(player->health <= 0 || enemy->health <= 0) {
 		return;
 	}
-
+    //checks for player choice
     while (true) {
         while (window->pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window->close();
-            }
+            }//attack
             if (event.type == sf::Event::KeyPressed) {
                 if (event.key.code == sf::Keyboard::Num1) {
                     player->attack(enemy);
@@ -94,11 +92,11 @@ void Fight::playerTurn() {
                     sleep(seconds(2)); // Add 2-second delay
 
                     return;
-                }
+                }//block
                 else if (event.key.code == sf::Keyboard::Num2 && player->shield > 0) {
                     player->block();
                     enemy->blockDamage = false;
-                    //player->shield--;
+                    
 
                     actionText.setString("Player blocks");
                     render(window); // Update the actionText
@@ -106,7 +104,7 @@ void Fight::playerTurn() {
                     sleep(seconds(2)); // Add 2-second delay
 
                     return;
-                }
+                }//special attack
                 else if (event.key.code == sf::Keyboard::Num3 && player->energy > 0) {
                     player->specialAttack(enemy);
                     player->energy--;
@@ -120,11 +118,9 @@ void Fight::playerTurn() {
                 }
             }
         }
-
-        //render(window); // Render the actionText
     }
 }
-
+//enemy turn in fight
 void Fight::enemyTurn() {
     playerTurnActive = false;
     statusText.setString("Enemy's turn");
@@ -133,36 +129,36 @@ void Fight::enemyTurn() {
 
     int choice;
     if (!enemyPrepareSpecialAttack){
-        choice = rand() % 3; // random choice
+        choice = rand() % 3; // random choice of the enemy
     }
     else {
-        choice = 2;
+        choice = 2;//if player prepared special attack it uses it
     }
 
     switch (choice) {
+        //enemy attack
     case 0:
         enemy->attack(player);
-        //sf::sleep(sf::seconds(2)); // add 2-second delay
 
         actionText.setString("Enemy attacks");
         render(window); // Update the actionText
         window->display(); // Update the window to display the changes
 
         break;
+        //enemy block
     case 1:
         enemy->block();
         player->blockDamage = false;
-        //sf::sleep(sf::seconds(2)); // add 2-second delay
 
         actionText.setString("Enemy blocks");
         render(window); // Update the actionText
         window->display(); // Update the window to display the changes
 
         break;
+        //enemy special attack
     case 2:
         if (!enemyPrepareSpecialAttack) {
             cout << "Enemy prepares special attack!" << endl;
-            //enemy->specialAttack(player);
             enemyPrepareSpecialAttack = true;
 
             actionText.setString("Enemy prepares special attack!");
@@ -192,7 +188,7 @@ void Fight::enemyTurn() {
         break;
     }
 }
-
+//update of the fight
 void Fight::update()
 {
     if (player->health <= 0) {
@@ -211,22 +207,22 @@ void Fight::update()
         level->fightStarted = false;
         return;
     }
-
+    //initial action text
     if (playerTurnActive) {
         actionText.setString("Choose an action: 1. Attack, 2. Block, 3. Special Attack");
     }
     else {
         actionText.setString("");
     }
-    
+    //player turn
     if (player->health > 0 && enemy->health > 0) {
         playerTurn();
     }
-
+    //enemy turn
     if (player->health > 0 && enemy->health > 0) {
         enemyTurn();
     }
-
+    //updates information about healths 
     playerHealthText.setString("Player Health: " + std::to_string(player->health));
     enemyHealthText.setString("Enemy Health: " + std::to_string(enemy->health));
 
@@ -234,7 +230,7 @@ void Fight::update()
     window->display(); // Display the rendered frame
 }
 
-
+//renders fight
     void Fight::render(sf::RenderWindow* window)
     {
         window->clear(Color::Black);
@@ -246,14 +242,6 @@ void Fight::update()
         window->draw(actionText);
 
         if (player->health > 0 && enemy->health > 0) {
-           
-            
-            /*if (player->blockDamage) {
-                statusText.setString("Player is blocking");
-            }*/
-            /*else {
-                statusText.setString("Player's turn");
-            }*/
             window->draw(statusText);
         }
         else if (player->health > 0) {

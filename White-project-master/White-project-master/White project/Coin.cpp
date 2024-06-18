@@ -4,7 +4,7 @@
 #include "Level.h"
 #include "Player.h"
 
-
+//Constructor
 Coin::Coin(Level* level, Texture texture, int value) {
 	this->name = "coin";
 	this->level = level;
@@ -17,16 +17,20 @@ Coin::Coin(Level* level, Texture texture, int value) {
 	sprite.setTexture(this->texture);
 }
 
+//Destructor
 Coin::~Coin() {
 
 }
 
+//Player takes coin
 void Coin::takeItem(Player* player)
 {
 	useItem(player);
 	
 	cout << "take coin" << endl;
 }
+
+//Player uses coin
 void Coin::useItem(Player* player)
 {
 	level->player->money += value;
@@ -34,9 +38,5 @@ void Coin::useItem(Player* player)
 
 	cout << player->money << endl;
 }
-#pragma once
-
-#include "Item.h"
-#include "Level.h"
 
 

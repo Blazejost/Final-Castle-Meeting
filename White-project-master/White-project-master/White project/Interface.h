@@ -8,7 +8,6 @@ public:
 
 	int health;
 	int money;
-	//int experience;
 	int* currentLevel;
 
 	RectangleShape statsPanel;
@@ -17,12 +16,13 @@ public:
 
 	Text healthText;
 	Text moneyText;
-	//Text experienceText;
 	Text currentLevelText;
 
+	//Constructor/Destructor
 	Interface(Player* player);
 	~Interface();
 
+	//Functions
 	void update(float dt);
 	void render(RenderWindow* window);
 };

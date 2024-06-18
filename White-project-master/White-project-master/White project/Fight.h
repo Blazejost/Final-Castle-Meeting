@@ -2,7 +2,7 @@
 
 class Fight {
 public:
-    //VAriables
+    //Variables
     sf::Texture playerTexture;
     Sprite playerSprite;
 
@@ -22,23 +22,29 @@ public:
     Text winText;
     Text loseText;
 
-
-    Fight(Level*level, Player* player, Enemy* enemy, int maxTurns);
-    RenderWindow* window;
-    Level* level;
-
-    Player* player;
-	Enemy* enemy;
-
+    //fight variables
     int maxTurns;
-    void startFight();
 
     bool playerWon;
     bool playerLost;
 
     bool enemyPrepareSpecialAttack = false;
 
+    //constructor
+    Fight(Level*level, Player* player, Enemy* enemy, int maxTurns);
+
+    //pointers
+    RenderWindow* window;
+    Level* level;
+
+    Player* player;
+    Enemy* enemy;
+    
+    //functions
+    void startFight();
+
 public:
+    //functions
     void playerTurn();
 
     void enemyTurn();

@@ -19,7 +19,7 @@
 
 
 enum class Locations;
-
+//constructor
 Level::Level(Game* game)
 {
     //Take data from game
@@ -56,13 +56,13 @@ Level::Level(Game* game)
 	//Game process
     isActiveKey = false;
 }
-
+//destructor
 Level::~Level() {
     delete map;
 }
 
 
-//map->tiles[player->positionY / map->tileSize - 1][player->positionX / map->tileSize - 1].getGlobalBounds().getPosition().x / map->tileSize;
+
     void Level::update(float deltaTime) {
         float playerX = player->sprite.getPosition().x;
         float playerY = player->sprite.getPosition().y;
@@ -196,11 +196,6 @@ Level::~Level() {
 		else {
 			isActiveKey = false;
 		}
-        
-        /*if (game->gameMode != GameModes::TRAVEL) {
-            return;
-        }*/
-        //VICTORY!!!
     }
     
 
@@ -212,9 +207,9 @@ void Level::renderLevel()
         //return;
     }
 
-    // Clear the window
     
-    // Render the map
+    
+    // Render the level
     updateEnemies();
     map->render();
     player->render();
@@ -223,15 +218,12 @@ void Level::renderLevel()
 }
 
 //Other
-//void Level::setPlayer(Player* player) {
-//    this->player = player;
-//}
 
+//add items that will appear on map
 void Level::addMapItems(int itemAmount) {
     mapItems.resize(itemAmount);
     
     //Coin
-	 //???
 	coinTexture.loadFromFile("Images/Level/Items/Golden Coin.png");
     Coin* goldenCoin = new Coin(this, coinTexture, coinValue);
 
@@ -242,15 +234,9 @@ void Level::addMapItems(int itemAmount) {
     Heart* heart = new Heart(this, heartTexture, 1);
 
     mapItems[1] = heart;
-
-    // mapItems[0] = goldenCoin;
-	////Key
-	//Texture keyTexture;
-	//keyTexture.loadFromFile("Images/Level/Items/Golden Key.png");
-	//mapItems[1] = new Key(keyTexture);
-
 }
 
+//adds enemies
 void Level::addEnemies(int enemiesAmount)
 {
     mapEnemies.resize(enemiesAmount);
@@ -260,6 +246,7 @@ void Level::addEnemies(int enemiesAmount)
     int damage = 2;
     int speed = 1;
 
+    //every location has different enemy parameters
 	if (location == Locations::CASTLE_MIDDLE) {
         health = 15;
         damage = 3;
@@ -269,6 +256,7 @@ void Level::addEnemies(int enemiesAmount)
         damage = 4;
     }
 
+    //loads textures and add enemies to map vector
     skeletonTexture.loadFromFile("Images/Enemies/Skeleton enemy.png", IntRect(0, 0, 60, 40));
     Skeleton* skeleton = new Skeleton(this, skeletonTexture, health, damage, speed);
     mapEnemies[0] = skeleton;
@@ -280,9 +268,10 @@ void Level::addEnemies(int enemiesAmount)
 
 }
 
+//updates player animation
 void Level::updatePlayerAnimation(float deltaTime) {
     
-    
+    //left walking animation
     if (player->controls != Controls::IDLE && player->sideLook == 'l') {
         static int frameIndex = 0;
         static float animationTimer = 0.f;
@@ -304,6 +293,7 @@ void Level::updatePlayerAnimation(float deltaTime) {
         player->sprite.setTexture(player->texture);
         player->sprite.setScale(2.5f, 2.5f);
     }
+    //right walking animation
     else if (player->controls != Controls::IDLE && player->sideLook == 'r') {
         static int frameIndex = 0;
         static float animationTimer = 0.f;
@@ -324,6 +314,7 @@ void Level::updatePlayerAnimation(float deltaTime) {
         player->sprite.setTexture(player->texture);
         player->sprite.setScale(2.5f, 2.5f);
     }
+    //left idle animation
     else if (player->controls == Controls::IDLE && player->sideLook == 'l') {
         static int frameIndex = 0;
         static float animationTimer = 0.f;
@@ -345,6 +336,7 @@ void Level::updatePlayerAnimation(float deltaTime) {
         player->sprite.setTexture(player->texture);
         player->sprite.setScale(2.5f, 2.5f);
     }
+    //right idle animation
     else {
         static int frameIndex = 0;
         static float animationTimer = 0.f;
@@ -367,11 +359,11 @@ void Level::updatePlayerAnimation(float deltaTime) {
         player->sprite.setTexture(player->texture);
         player->sprite.setScale(2.5f, 2.5f);
     }
-        //...
+      
 
         
 }
-
+//checks if items are near player
 void Level::nearPlayer() {
      sf::FloatRect playerBounds(player->sprite.getPosition().x, player->sprite.getPosition().y, player->sprite.getGlobalBounds().width, player->sprite.getGlobalBounds().height);
        
@@ -404,9 +396,10 @@ void Level::nearPlayer() {
         game->levelCompleted = true;
     }
 }
-
+//player takes item
 void Level::takeItem(Item* item) {
     // Handle the interaction with the item
+    //coin
     if (dynamic_cast<Coin*>(item)) {
         item->takeItem(player);
         
@@ -421,6 +414,7 @@ void Level::takeItem(Item* item) {
             }
         }
     }
+    //heart
     else if (dynamic_cast<Heart*>(item) && player->health < player->maxHealth) {
         
         item->takeItem(player);
@@ -437,49 +431,49 @@ void Level::takeItem(Item* item) {
                 }
             }
         }
-
+    //key
     else if (dynamic_cast<Key*>(item)) {
 		item->takeItem(player);
     }
-
-    // Add more item types and their respective handling logic here
 }
 
-void Level::animateEnemy(Enemy* enemy, float deltaTime) {
-    //Implement enemy animation logic here
-        // Update enemy texture based on its animation pattern
-        // You can use a timer and frame index to control the enemy's animation
+//void Level::animateEnemy(Enemy* enemy, float deltaTime) {
+//    //Implement enemy animation logic here
+//        // Update enemy texture based on its animation pattern
+//        // You can use a timer and frame index to control the enemy's animation
+//
+//        // Example: Simple enemy animation pattern (walk left and right)
+//        static int frameIndex = 0;
+//    static float animationTimer = 0.0f;
+//    const float animationSpeed = 0.3f; // Adjust this value to control the enemy's animation speed
+//
+//    animationTimer += deltaTime;
+//
+//    if (animationTimer >= animationSpeed) {
+//        animationTimer = 0.0f;
+//        frameIndex = (frameIndex + 1) % 2; // Assuming 2 frames in the animation
+//    }
+//
+//    int startX = 0; // Starting x-coordinate of the animation frames
+//    int startY = 0; // Starting y-coordinate of the animation frames
+//    int frameWidth = 32; // Width of each animation frame
+//    int frameHeight = 32; // Height of each animation frame
+//
+//    if (enemy->direction == 'l') {
+//        enemy->texture.loadFromFile("Images/EnemyAnimationSheet_Left.png", IntRect(startX + frameIndex * frameWidth, startY, frameWidth, frameHeight));
+//    }
+//    else {
+//        enemy->texture.loadFromFile("Images/EnemyAnimationSheet_Right.png", IntRect(startX + frameIndex * frameWidth, startY, frameWidth, frameHeight));
+//    }
+//
+//    enemy->sprite.setTexture(enemy->texture);
+//    enemy->sprite.setScale(2.0f, 2.0f);
+//}
 
-        // Example: Simple enemy animation pattern (walk left and right)
-        static int frameIndex = 0;
-    static float animationTimer = 0.0f;
-    const float animationSpeed = 0.3f; // Adjust this value to control the enemy's animation speed
-
-    animationTimer += deltaTime;
-
-    if (animationTimer >= animationSpeed) {
-        animationTimer = 0.0f;
-        frameIndex = (frameIndex + 1) % 2; // Assuming 2 frames in the animation
-    }
-
-    int startX = 0; // Starting x-coordinate of the animation frames
-    int startY = 0; // Starting y-coordinate of the animation frames
-    int frameWidth = 32; // Width of each animation frame
-    int frameHeight = 32; // Height of each animation frame
-
-    if (enemy->direction == 'l') {
-        enemy->texture.loadFromFile("Images/EnemyAnimationSheet_Left.png", IntRect(startX + frameIndex * frameWidth, startY, frameWidth, frameHeight));
-    }
-    else {
-        enemy->texture.loadFromFile("Images/EnemyAnimationSheet_Right.png", IntRect(startX + frameIndex * frameWidth, startY, frameWidth, frameHeight));
-    }
-
-    enemy->sprite.setTexture(enemy->texture);
-    enemy->sprite.setScale(2.0f, 2.0f);
-}
-
+//updates enemies
 void Level::updateEnemies()
 {
+    //checks if enemies were deleted from map
     for (int i = 0; i < map->enemies.size(); i++) {
         if (map->enemies[i]->isDead) {
             map->enemies.erase(map->enemies.begin() + i);

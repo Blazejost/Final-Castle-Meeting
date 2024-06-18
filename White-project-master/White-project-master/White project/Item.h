@@ -12,7 +12,7 @@ public:
 	Texture texture;
 	Sprite sprite;
 
-	//
+	//variables
 	bool isOnMap;
 	bool used;
 
@@ -20,18 +20,19 @@ public:
 	string name;
 	int value;
 
-	//Constructor
+	//Constructors
 	Item();
 	Item(Texture texture);
-	void setScale(float x, float y);
+	
 
 	//Copy constructor
 	Item(const Item& sItem);
 
 	//Destructor
 	virtual ~Item();
-
+	//Functions
 	virtual void takeItem(Player* player) = 0;
 	virtual void useItem(Player* player) = 0;
+    void setScale(float x, float y);
 };
 

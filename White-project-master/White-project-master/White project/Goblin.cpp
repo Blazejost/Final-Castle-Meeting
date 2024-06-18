@@ -3,6 +3,8 @@
 #include "Goblin.h"
 #include "Level.h"
 
+//Constructor/Destructor
+
 Goblin::Goblin(Level* level, Texture texture, int health, int damage, int speed)
 {
 	this->level = level;

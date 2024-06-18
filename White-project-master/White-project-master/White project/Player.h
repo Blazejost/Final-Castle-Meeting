@@ -1,5 +1,6 @@
 #pragma once
 
+//states of movement
 enum class Controls
 {
 	IDLE,
@@ -15,6 +16,7 @@ class Player
 {
 
 public:
+	//Variables
 	string name;
 
 	Game* game;
@@ -32,6 +34,7 @@ public:
 
 	int money;
 
+	//inventory
 	Inventory* inventory;
 	bool hasKey;
 
@@ -44,8 +47,6 @@ public:
 
 	//Control keys
 	Controls controls;
-
-	//Camera view
 
 	//Window
 	RenderWindow* window;
@@ -60,10 +61,12 @@ public:
 	Level* level;
 	Map* map;
 
+	//constructor/destructor
 	Player(Game* game, string name, Texture playerTexture);
 
 	~Player();
 
+	//functions
 	void update();
 	void render();
 
@@ -79,9 +82,4 @@ public:
 	void block();
 
 	void specialAttack(Enemy* enemy);
-
-	//bool canSeeSpecialAttack() {
-	//	return false; // player cannot see enemy's special attack preparation
-	//}
-
 };

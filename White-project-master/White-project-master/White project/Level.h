@@ -24,8 +24,6 @@ public:
 
 	//Level
 	int* currentLevel;
-	//Texture backgroundTexture;
-	//Sprite backgroundSprite;
 
 	Enemy* enemy;
 
@@ -33,8 +31,6 @@ public:
 	Map* map;
 	int tileSize;
 	int newXTile;
-
-	//Interaction
 
 
 	//Items
@@ -74,20 +70,15 @@ public:
 	void input(float deltaTime);
 	//Render
 	void renderLevel();
-
-	//Other
-	//void setPlayer(Player* player);
 	
 	//Add items that will appear on map
 	void addMapItems(int itemAmount);
 
-	//void checkItemCollision();
-	//void handleItemCollision(Item* item);
-
+	
 	void addEnemies(int enemiesAmount);
 
 	void nearPlayer();
 	void takeItem(Item* item);
 
-	void animateEnemy(Enemy* enemy, float deltaTime);
+	//void animateEnemy(Enemy* enemy, float deltaTime);
 };

@@ -2,13 +2,12 @@
 class Tile
 {
 public:
+	//variables
 	Sprite sprite;
 	bool wall;
 	bool hasItem;
-
+	//Constructor/Destructor
 	Tile();
 	~Tile();
-
-	Vector2f getItemPosition(int tileSize, const sf::Texture* itemTexture);
 };
 

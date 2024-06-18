@@ -2,6 +2,7 @@
 #include "Item.h"
 #include "Player.h"
 
+//Constructors
 Item::Item() {
 
 }
@@ -15,28 +16,21 @@ Item::Item(Texture texture)
     isOnMap = false;
 }
 
+//Copy cunstructors
 Item::Item(const Item& other) {
     // Copy the members of the other object
-    //positionX = other.positionX;
-    //positionY = other.positionY;
     texture = other.texture;
     sprite = Sprite(texture); // Assign the texture to the sprite
     isOnMap = other.isOnMap;
     value = other.value;
-    //... copy other members...
-
-
 }
 
-//Item::Item(const Item& sItem)
-//{
-//
-//}
-
+//Destructor
 Item::~Item() {
 
 }
 
+//sets sprites size
 void Item::setScale(float x, float y) {
     sprite.setScale(x, y);
 }

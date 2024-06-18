@@ -13,7 +13,7 @@ void Game::initVariables()
 	//Music
 	music.openFromFile("Music/Pixel 5.ogg");
 	music.setLoop(true);
-	music.setVolume(0); //*****
+	music.setVolume(20); 
 	music.play();
 
 
@@ -38,13 +38,12 @@ void Game::initVariables()
 	levelCompleted = false;
 	level = new Level(this);
 
-	//Set player to level
-	//level->setPlayer(player);
 }
 
+//Create window
 void Game::initWindow()
 {
-	//Create window
+	
 	videomode.height = 1000;
 	videomode.width = 1200;
 	window = new RenderWindow(videomode, "Simple game", Style::Titlebar | Style::Close);
@@ -61,7 +60,6 @@ Game::Game()
 //Destructor
 Game::~Game()
 {
-	delete level; //Remove later
 	delete player;
 	delete window;
 }
@@ -143,13 +141,13 @@ void Game::update()
 	pollEvents();
 
 	// Delta time calculation
-	dt = clock.restart().asSeconds();;
-
+	dt = clock.restart().asSeconds();
+	//checks game process
 	checkGameProcess();
 
 	//Update game objects
 	if (!pause) {
-		//Update player
+		
 
 		
 		// Update the view's center
@@ -218,22 +216,27 @@ void Game::render()
 		//Set view
 		
 		//Render game
+
+		//travel mode
 		if (gameMode == GameModes::TRAVEL) {
 			window->setView(view);
 			level->renderLevel();
 		}
+		//inventory mode
 		else if (gameMode == GameModes::INVENTORY) {
 			window->setView(view);
 			level->renderLevel();
 
 			player->inventory->render(window);
 		}
+		//fight mode
 		else if (gameMode == GameModes::FIGHT) {
 			view.setCenter(260, 230);
 			view.setSize(600, 400);
 			window->setView(view);
 			level->fight->render(window);
 		}
+		//lose mode
 		else if (gameMode == GameModes::LOSE) {
 			window->clear();
 			Font font;
@@ -248,6 +251,7 @@ void Game::render()
 			window->setView(view);
 			window->draw(loseText);
 		}
+		//win mode
 		else if (gameMode == GameModes::WIN) {
 			window->clear();
 			Font font;
@@ -265,36 +269,33 @@ void Game::render()
 
 }
 
-
+	//display interface
 		player->interface->render(window);
-		//Set window
-		//window->setView(window->getDefaultView());
-
+		
 		// Display the rendered frame
 		window->display();
 	}
 
-
+//checks game progress
 void Game::checkGameProcess()
 {
-
+	//first location
 	if (currentLevel == 3 ) {
 		location = Locations::CASTLE_MIDDLE;
-		/*currentLevel = 1;*/
 		cout << "New location! " << endl;
 	}
-
+	//second location
 	if (currentLevel == 5 ) {
 		location = Locations::CASTLE_STAIRS;
-		/*currentLevel = 1;*/
 		cout << "New location! " << endl;
 	}
+	//third location
 	if (currentLevel == 7 ) {
 		gameMode = GameModes::WIN;
 
 		cout << "You won! " << endl;
 	}
-
+	//pass to the next level
 	if(levelCompleted) {
 		delete level;
 		level = new Level(this);

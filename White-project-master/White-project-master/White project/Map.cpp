@@ -12,6 +12,7 @@
 #include "Skeleton.h"
 #include "Goblin.h"
 
+//onstructor
 Map::Map(Level *level)
 {
 	//Map
@@ -29,22 +30,29 @@ Map::Map(Level *level)
 	enemiesAmount = 3;
 }
 
+//Destructor
 Map::~Map()
 {
 }
 
+//Generates map for level
 void Map::generateMap(int width, int height, int tileSize)
 {
+	//parameters
 	this->width = width;
 	this->height = height;
 	this->tileSize = tileSize;
 
+	//Clears vector tile and sets its size
 	tiles.clear();
 	tiles.resize(height);
 
+	//start position for player
 	startY = height - 2;
 
+	//sets walls on map
 	for (int i = 0; i < height; i++) {
+		//sets the size 
 		if (i < tiles.size()) {
 			tiles[i].resize(width);
 		}
@@ -65,7 +73,7 @@ void Map::generateMap(int width, int height, int tileSize)
 	int linia2Y{};
 	int linia3X{};
 
-	//tworzenie drogi glownej
+	//creating main route
 	{
 		linia1X = rand() % (height - 2) + 1;
 		startX = linia1X;
@@ -75,10 +83,10 @@ void Map::generateMap(int width, int height, int tileSize)
 			tiles[i][linia1X].wall = false;
 		}
 
-		//koncowa x
+		//end of level(x)
 		endX = linia1X;
 
-		//tworzenie drog bocznych
+		//creating side routes
 		int szerokosc_linii2{};
 		linia2Y = rand() % (height - 2 - 2) + 2;
 		if (linia1X <= width / 2) {
@@ -88,7 +96,7 @@ void Map::generateMap(int width, int height, int tileSize)
 				szerokosc_linii2++;
 			}
 
-			//tworzenie dodatkowych galedzi
+			//creating additional routes
 			linia3X = rand() % (width - linia1X - 5) + linia1X + 4;
 			if (linia2Y <= height / 2) {
 				for (int i = linia2Y; i < height - 2; i++) {
@@ -111,7 +119,7 @@ void Map::generateMap(int width, int height, int tileSize)
 				tiles[linia2Y][i].wall = false;
 			}
 
-			//tworzenie dodatkowych galedzi
+			//creating additional routes 
 
 			linia3X = rand() % (linia1X - 6 - 0) + 1;
 			if (linia2Y <= height / 2) {
@@ -131,39 +139,43 @@ void Map::generateMap(int width, int height, int tileSize)
 		}
 
 
-		//Secret and lock
+		//x key 
 		secretX = linia3X;
 
-		//tworzenie klucza
+		//creating key
 		key = new Key(level, keyTexture);
 
+		//calculates the key position
 		secretX = secretX * tileSize + (tileSize / 2) - (key->sprite.getTexture()->getSize().x / 2);
 		secretY = secretY * tileSize + (tileSize / 2) - (key->sprite.getTexture()->getSize().y / 2);
+		//sets sprites and sets the size
 		key->sprite.setPosition(secretX, secretY);
 		key->sprite.scale(1.5f, 1.5f);
-		//tiles[secretY][secretX] = secret_icon;
-
-		//koniec
-		//tiles[endY][endX] = lock_icon;
+		
+		//end
+		//position of the door
 		lockSprite.setPosition(endX * tileSize, 0);
 
+		//start position of the player
 		player->setPosition(startX * tileSize, startY * tileSize);
 
-		//TEST
 
 		player->positionXTile = startX;
 		player->positionYTile = startY;
 	}
 }
 
+//Generates items on map
 void Map::generateItems(vector <Item*> mapItems)
 {
 	items.clear(); // Clear the existing items vector
 
+	//chancces of generating items
 	float randomNumber = 0.f;
 	float chanceOfGenerating = 0.1f;
 	bool willGenerateItem = false;
 
+	//Generates items
 	while (itemAmount > 0) {
 		// Go through the whole map
 		for (int i = 1; i < height - 1; i++) {
@@ -192,8 +204,7 @@ void Map::generateItems(vector <Item*> mapItems)
 					}
 
 					else {
-						// Handle the case where the item is not a Coin
-						// You can add more dynamic casts for other types of items
+						
 					}
 
 					items.back()->isOnMap = true;
@@ -212,11 +223,12 @@ void Map::generateItems(vector <Item*> mapItems)
 	}
 }
 
-
+//Generates enemies
 void Map::generateEnemies(vector <Enemy*> mapEnemies)
 {
 	enemies.clear(); // Clear the existing items vector
 
+	//chances of generating enemies
 	float randomNumber = 0.f;
 	float chanceOfGenerating = 0.1f;
 	bool willGenerateItem = false;
@@ -248,22 +260,17 @@ void Map::generateEnemies(vector <Enemy*> mapEnemies)
 					Goblin* goblin = dynamic_cast<Goblin*>(enemy); // Cast to Coin*
 					if (dynamic_cast<Goblin*>(goblin)) {
 						enemies.push_back(new Goblin(*goblin)); // Create a new Coin object
-						
+
 						cout << "goblin" << endl;
 					}
-					//Heart* heart = dynamic_cast<Heart*>(skeleton); // Cast to Coin*
-					//if (dynamic_cast<Heart*>(item)) {
-					//	items.push_back(new Heart(*heart)); // Create a new Coin object
-					//}
 
 					else {
-						// Handle the case where the item is not a Coin
-						// You can add more dynamic casts for other types of items
+						
 					}
 
 					
 
-					// Calculate the position to center the item on the tile
+					// Calculate the position to center the enemy on the tile
 					if (!enemies.empty()) {
 						float scaleFactor = 2.f; // or any other scale factor you want
 						enemies.back()->sprite.setScale(scaleFactor, scaleFactor);
@@ -310,6 +317,7 @@ void Map::render() {
 		}
 	}
 
+	//if player doesnt have key it shows on map
 	if (player->hasKey == false){
 		target->draw(key->sprite);
 	}
@@ -321,11 +329,9 @@ void Map::render() {
 	for (auto& enemy: enemies) {
 		target->draw(enemy->sprite);
 	}
-
-	// Display the rendered frame
-	//Test
 }
 
+//Loads tile textures for map
 void Map::loadTileTextures() {
 	float tileScale = 12.f; //Scale for tiles textures
 	
@@ -334,6 +340,7 @@ void Map::loadTileTextures() {
 	wallSprite.setTexture(wallTexture);
 	wallSprite.setScale(tileScale, tileScale);
 
+	//Every location has different color
 	if (level->location == Locations::CASTLE_MIDDLE) {
 		wallSprite.setColor(Color::Yellow);
 	}
@@ -341,12 +348,16 @@ void Map::loadTileTextures() {
 		wallSprite.setColor(Color::Red);
 	}
 
+	//load texture from file for floor
 	emptyTexture.loadFromFile("Images/Map/Tiles/Floor.png", IntRect(0, 0, 20, 20));
+	//sets texture and size for sprites
 	emptySprite.setTexture(emptyTexture);
 	emptySprite.setScale(tileScale, tileScale);
 
+	//Loads key texture from file
 	keyTexture.loadFromFile("Images/Map/Items/Golden Key.png");
 
+	//Loads door texture from file
 	lockTexture.loadFromFile("Images/Map/Tiles/door_closed.png");
 	lockSprite.setTexture(lockTexture);
 	lockSprite.setScale(5, 5);

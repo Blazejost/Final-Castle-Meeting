@@ -2,7 +2,7 @@
 #include "Enemy.h"
 #include "Skeleton.h"
 #include "Level.h"
-
+//Constructor/Destructor
 Skeleton::Skeleton(Level* level, Texture texture, int health, int damage, int speed)
 {
 	this->level = level;

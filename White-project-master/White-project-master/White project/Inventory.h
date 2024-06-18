@@ -3,7 +3,7 @@
 class Inventory {
 private:
     Player* player;
-
+    //Variables
     RectangleShape background;
 
     sf::Font font;
@@ -23,7 +23,10 @@ private:
     Text increaseEnergy;
 
 public:
+    //Constructor
     Inventory(Player* player);
+
+    //functions
     void addItem(Item* items);
     void removeItem(int index);
     void removeItem(Item* item);
