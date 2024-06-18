@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Pliki zasobów">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Game logic">
+      <UniqueIdentifier>{938c0ce5-4037-4789-913c-b16bd410763e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game logic\Items">
+      <UniqueIdentifier>{83dcc1d4-3687-4fb8-866e-81146f5b76bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game logic\Map">
+      <UniqueIdentifier>{cdc1795a-3784-473a-81de-1d8a66bfebbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game logic\Items\Misc">
+      <UniqueIdentifier>{8f8ecf80-67b5-4b2b-b944-09b4184617ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game logic\Player">
+      <UniqueIdentifier>{e237b0d8-d8d0-40b9-a8b5-d5681e9c9188}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game logic\Enemies">
+      <UniqueIdentifier>{e35ab030-7372-4c69-919d-bac25f60ad81}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Main.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Source files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Header files</Filter>
+    </ClCompile>
+    <ClCompile Include="Level.cpp">
+      <Filter>Game logic</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Game logic\Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Tile.cpp">
+      <Filter>Game logic\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Game logic\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>Game logic\Items\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Heart.cpp">
+      <Filter>Game logic\Items\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Key.cpp">
+      <Filter>Game logic\Items\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Game logic\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Inventory.cpp">
+      <Filter>Game logic\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Interface.cpp">
+      <Filter>Game logic\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Game logic\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Skeleton.cpp">
+      <Filter>Game logic\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Goblin.cpp">
+      <Filter>Game logic\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Fight.cpp">
+      <Filter>Game logic</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Game.h">
+      <Filter>Source files</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>Header files</Filter>
+    </ClInclude>
+    <ClInclude Include="Level.h">
+      <Filter>Game logic</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Game logic\Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Tile.h">
+      <Filter>Game logic\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Game logic\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>Game logic\Items\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Heart.h">
+      <Filter>Game logic\Items\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Key.h">
+      <Filter>Game logic\Items\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Game logic\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Inventory.h">
+      <Filter>Game logic\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Interface.h">
+      <Filter>Game logic\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>Game logic\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Skeleton.h">
+      <Filter>Game logic\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Goblin.h">
+      <Filter>Game logic\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Fight.h">
+      <Filter>Game logic</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
